@@ -1,0 +1,65 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Apresentação LaTeX",
+            "type": "shell",
+            "command": "pdflatex",
+            "args": [
+                "-output-directory=temp",
+                "${relativeFile}"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Criar Diretórios",
+                "Mover PDF para Output"
+            ]
+        },
+        {
+            "label": "Criar Diretórios",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "if (!(Test-Path 'temp')) { New-Item -ItemType Directory -Path 'temp' }; if (!(Test-Path 'output')) { New-Item -ItemType Directory -Path 'output' }"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Mover PDF para Output",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "$fileName = [System.IO.Path]::GetFileNameWithoutExtension('${fileBasename}'); if (Test-Path \"temp\\$fileName.pdf\") { Move-Item \"temp\\$fileName.pdf\" \"output\\\" -Force; Write-Host \"✅ PDF movido para output\\$fileName.pdf\" } else { Write-Host \"❌ PDF não encontrado\" }"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Limpar Arquivos Temporários",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "Remove-Item 'temp\\*' -Force -ErrorAction SilentlyContinue"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ]
+}

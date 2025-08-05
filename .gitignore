@@ -1,0 +1,33 @@
+# Ignorar arquivos temporários do LaTeX
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+
+# Ignorar pasta temporária (exceto .gitkeep)
+temp/*
+!temp/.gitkeep
+
+# Ignorar backups do editor
+*~
+*.bak
+*.swp
+*.tmp
+
+# Ignorar arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Manter estrutura de pastas vazias
+!.gitkeep

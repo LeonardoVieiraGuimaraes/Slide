@@ -1,0 +1,122 @@
+% Estilo personalizado para apresentações Newton Paiva
+% Para usar: \usepackage{styles/newton-paiva-style}
+
+\ProvidesPackage{newton-paiva-style}
+
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+% Configurações para formato 16:9
+\geometry{paperwidth=16cm,paperheight=9cm}
+
+% Cores personalizadas da Newton Paiva
+\definecolor{newtonblue}{RGB}{0, 51, 102}
+\definecolor{newtonlightblue}{RGB}{70, 130, 180}
+\definecolor{newtongray}{RGB}{128, 128, 128}
+\definecolor{newtonpurple}{RGB}{146, 39, 143}  % Cor roxa do logo
+\definecolor{newtanorange}{RGB}{255, 165, 0}   % Cor laranja do logo
+\definecolor{newtonbackground}{HTML}{5c2438}    % Cor de fundo personalizada
+
+% Configuração do tema
+\setbeamercolor{structure}{fg=newtonpurple}
+\setbeamercolor{palette primary}{bg=newtonpurple,fg=white}
+\setbeamercolor{palette secondary}{bg=newtonlightblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=newtongray,fg=white}
+% Configuração do plano de fundo
+\setbeamercolor{background canvas}{bg=newtonbackground}
+\setbeamercolor{normal text}{fg=white}
+\setbeamercolor{item}{fg=white}
+\setbeamercolor{subitem}{fg=white}
+\setbeamercolor{subsubitem}{fg=white}
+\setbeamercolor{headline}{bg=newtonbackground}
+\setbeamercolor{item}{fg=white}
+\setbeamercolor{subitem}{fg=white}
+\setbeamercolor{subsubitem}{fg=white}
+
+% Fonte para título
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+% Remove símbolos de navegação
+\setbeamertemplate{navigation symbols}{}
+
+% Numeração de páginas
+\setbeamertemplate{footline}{
+    \hfill
+    \usebeamercolor[fg]{page number in head/foot}
+    \usebeamerfont{page number in head/foot}
+    \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt
+}
+
+% Configuração do cabeçalho com logo
+\setbeamertemplate{headline}{
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.5cm,dp=0.5cm]{headline}
+        \vskip0.3cm
+        \hfill
+        \newtonlogo[1cm]
+        \hspace*{1cm}
+        \vskip0.2cm
+    \end{beamercolorbox}
+}
+
+% Customização de listas
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=white}
+\setbeamercolor{enumerate item}{fg=white}
+
+% Configuração dos blocos para fundo escuro
+\setbeamercolor{block title}{bg=newtonpurple,fg=white}
+\setbeamercolor{block body}{bg=white,fg=black}
+\setbeamercolor{block title alerted}{bg=red!75!black,fg=white}
+\setbeamercolor{block body alerted}{bg=white,fg=black}
+\setbeamercolor{block title example}{bg=green!75!black,fg=white}
+\setbeamercolor{block body example}{bg=white,fg=black}
+
+% Configuração do logo Newton Paiva com fallback
+\RequirePackage{ifthen}
+\newcommand{\newtonlogo}[1][1.2cm]{%
+    \IfFileExists{../assets/logos/logNewtonPaiva.png}{%
+        \includegraphics[height=#1]{../assets/logos/logNewtonPaiva.png}%
+    }{%
+        \IfFileExists{assets/logos/logNewtonPaiva.png}{%
+            \includegraphics[height=#1]{assets/logos/logNewtonPaiva.png}%
+        }{%
+            \fbox{\raisebox{-0.3\height}{\textcolor{newtonpurple}{\textbf{\small NEWTON PAIVA}}}}%
+        }%
+    }%
+}
+
+% Template personalizado com logo para formato 16:9
+\setbeamertemplate{title page}{
+    % Logo no topo da página
+    \vbox{}
+    \vskip0.5cm
+    \begin{center}
+        \newtonlogo[1.5cm]
+    \end{center}
+    \vskip0.5cm
+    
+    \begingroup
+        \centering
+        \begin{beamercolorbox}[sep=8pt,center]{title}
+            \usebeamerfont{title}\inserttitle\par%
+            \ifx\insertsubtitle\@empty%
+            \else%
+                \vskip0.25em%
+                {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+            \fi%     
+        \end{beamercolorbox}%
+        \vskip1em\par
+        \begin{beamercolorbox}[sep=8pt,center]{author}
+            \usebeamerfont{author}\insertauthor
+        \end{beamercolorbox}
+        \begin{beamercolorbox}[sep=8pt,center]{institute}
+            \usebeamerfont{institute}\insertinstitute
+        \end{beamercolorbox}
+        \begin{beamercolorbox}[sep=8pt,center]{date}
+            \usebeamerfont{date}\insertdate
+        \end{beamercolorbox}
+    \endgroup
+    \vfill
+}
