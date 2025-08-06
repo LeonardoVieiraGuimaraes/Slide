@@ -1,0 +1,899 @@
+% ============================================================================
+% ESTILO PERSONALIZADO PARA APRESENTAÇÕES NEWTON PAIVA
+% ============================================================================
+% Arquivo: newton-paiva-style.sty
+% Descrição: Package LaTeX personalizado para criar apresentações Beamer
+%           com a identidade visual da Newton Paiva University
+% Para usar: \usepackage{styles/newton-paiva-style}
+% ============================================================================
+
+% Declara o nome do package para o LaTeX
+\ProvidesPackage{newton-paiva-style}
+
+% ============================================================================
+% DEPENDÊNCIAS - Pacotes necessários para o funcionamento
+% ============================================================================
+\RequirePackage{ifthen}     % Permite estruturas condicionais (if/then/else)
+\RequirePackage{graphicx}   % Suporte para inserção de imagens (logo)
+\RequirePackage{xcolor}     % Definição e uso de cores personalizadas
+\RequirePackage{geometry}   % Controle das dimensões da página
+\RequirePackage{textpos}    % Posicionamento absoluto de elementos
+
+% ============================================================================
+% CONFIGURAÇÕES DE FORMATO DA PÁGINA
+% ============================================================================
+% Define as dimensões da página para formato widescreen 16:9
+% Ideal para apresentações modernas e projetores HD
+\geometry{paperwidth=16cm,paperheight=9cm}
+
+% ============================================================================
+% PALETA DE CORES NEWTON PAIVA
+% ============================================================================
+% Cores baseadas na identidade visual da instituição
+\definecolor{newtonblue}{RGB}{0, 51, 102}        % Azul institucional escuro
+\definecolor{newtonlightblue}{RGB}{70, 130, 180} % Azul claro complementar
+\definecolor{newtongray}{RGB}{128, 128, 128}     % Cinza neutro para detalhes
+\definecolor{newtonpurple}{RGB}{146, 39, 143}    % Roxo primário do logo Newton Paiva
+\definecolor{newtanorange}{RGB}{255, 165, 0}     % Laranja secundário do logo
+\definecolor{newtonbackground}{HTML}{5c2438}     % Cor de fundo personalizada (vinho escuro)
+
+% ============================================================================
+% CONFIGURAÇÃO DO TEMA BEAMER
+% ============================================================================
+% Define as cores estruturais do tema de apresentação
+\setbeamercolor{structure}{fg=newtonpurple}                    % Cor dos elementos estruturais (títulos, bullets)
+\setbeamercolor{palette primary}{bg=newtonpurple,fg=white}     % Paleta primária: fundo roxo, texto branco
+\setbeamercolor{palette secondary}{bg=newtonlightblue,fg=white}% Paleta secundária: fundo azul claro
+\setbeamercolor{palette tertiary}{bg=newtongray,fg=white}      % Paleta terciária: fundo cinza
+
+% ============================================================================
+% CONFIGURAÇÃO DO PLANO DE FUNDO E CORES GERAIS
+% ============================================================================
+\setbeamercolor{background canvas}{bg=newtonbackground}        % Define cor de fundo da apresentação
+\setbeamercolor{normal text}{fg=white}                         % Texto normal em branco
+\setbeamercolor{item}{fg=white}                                % Itens de lista em branco
+\setbeamercolor{subitem}{fg=white}                             % Sub-itens de lista em branco
+\setbeamercolor{subsubitem}{fg=white}                          % Sub-sub-itens em branco
+\setbeamercolor{headline}{bg=newtonbackground}                 % Cabeçalho com fundo institucional
+
+% ============================================================================
+% CONFIGURAÇÃO DE FONTES
+% ============================================================================
+% Define tamanhos e estilos de fonte para diferentes elementos
+\setbeamerfont{title}{size=\Large,series=\bfseries}      % Título: grande e negrito
+\setbeamerfont{frametitle}{size=\large,series=\bfseries} % Título do slide: médio e negrito
+
+% ============================================================================
+% CONFIGURAÇÕES DE NAVEGAÇÃO E RODAPÉ
+% ============================================================================
+% Remove os símbolos de navegação padrão do Beamer (setas, botões)
+\setbeamertemplate{navigation symbols}{}
+
+% Configura o rodapé com numeração das páginas
+\setbeamertemplate{footline}{
+    \hfill                                                % Alinha à direita
+    \usebeamercolor[fg]{page number in head/foot}        % Usa cor definida para número da página
+    \usebeamerfont{page number in head/foot}             % Usa fonte definida para número da página
+    \insertframenumber\,/\,\inserttotalframenumber       % Formato: "página atual / total de páginas"
+    \kern1em\vskip2pt                                     % Espaçamento e margem
+}
+
+% ============================================================================
+% SISTEMA DE DISCIPLINAS PERSONALIZADAS
+% ============================================================================
+% Cria um comando personalizado para definir o nome da disciplina
+\newcommand{\disciplina}[1]{\def\@disciplina{#1}}    % Define comando \disciplina{Nome}
+\newcommand{\insertdisciplina}{\@disciplina}         % Comando para inserir o nome da disciplina
+\disciplina{Nome da Disciplina}                      % Define valor padrão caso não seja especificado
+
+
+% ============================================================================
+% COMANDOS PERSONALIZADOS PARA INFORMAÇÕES DA CAPA
+% ============================================================================
+% Comando para definir o nome da instituição
+\newcommand{\instituicao}[1]{\def\@instituicao{#1}}
+\newcommand{\insertinstituicao}{\@instituicao}
+\instituicao{Nome da Instituição} % Valor padrão
+
+% Comando para definir o nome do professor/autor
+\newcommand{\professor}[1]{\def\@professor{#1}}
+\newcommand{\insertprofessor}{\@professor}
+\professor{Nome do Professor} % Valor padrão
+
+% Comando para definir uma imagem personalizada na capa
+\newcommand{\imagemcapa}[1]{\def\@imagemcapa{#1}}
+\newcommand{\insertimagemcapa}{\@imagemcapa}
+\imagemcapa{assets/images/image.png}  % Imagem padrão definida
+
+
+
+% ============================================================================
+% CONFIGURAÇÃO DE MÚLTIPLOS CABEÇALHOS
+% ============================================================================
+
+% CABEÇALHO PADRÃO: Logo + Disciplina com linhas decorativas
+\newcommand{\cabecalhopadrao}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2cm,dp=0.3cm]{headline}
+            \vskip0.04cm
+            \begin{columns}
+                \begin{column}{0.15\textwidth}
+                    \hspace*{0.5cm}
+                    \newtonlogo[1.8cm]
+                \end{column}
+                \begin{column}{0.85\textwidth}
+                    \begin{minipage}[t]{0.95\textwidth}
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                        \vskip0.3cm
+                        \hfill
+                        \textcolor{white}{\textbf{\insertdisciplina}}
+                        \vskip0.3cm
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                    \end{minipage}
+                \end{column}
+            \end{columns}
+            \vskip0.04cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO SIMPLES: Apenas logo pequeno no canto
+\newcommand{\cabecalhosimples}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=1cm,dp=0.1cm]{headline}
+            \vskip0.2cm
+            \hspace*{0.5cm}
+            \newtonlogo[0.8cm]
+            \vskip0.2cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO COMPLETO: Logo + Disciplina + Seção atual
+\newcommand{\cabecalhocompleto}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2.5cm,dp=0.3cm]{headline}
+            \vskip0.04cm
+            \begin{columns}
+                \begin{column}{0.15\textwidth}
+                    \hspace*{0.5cm}
+                    \newtonlogo[1.8cm]
+                \end{column}
+                \begin{column}{0.85\textwidth}
+                    \begin{minipage}[t]{0.95\textwidth}
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                        \vskip0.2cm
+                        \hfill
+                        \textcolor{white}{\textbf{\Large \insertdisciplina}}
+                        \vskip0.2cm
+                        \hfill
+                        \textcolor{newtanorange}{\textbf{\insertsection}}
+                        \vskip0.2cm
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                    \end{minipage}
+                \end{column}
+            \end{columns}
+            \vskip0.04cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO LIMPO: Sem cabeçalho (para slides especiais)
+\newcommand{\cabecalholimpo}{
+    \setbeamertemplate{headline}{}
+}
+
+% CABEÇALHO INSTITUCIONAL: Logo + Instituição + Professor
+\newcommand{\cabecalhoinstitucional}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=1.5cm,dp=0.2cm]{headline}
+            \vskip0.1cm
+            \begin{columns}
+                \begin{column}{0.20\textwidth}
+                    \hspace*{0.5cm}
+                    \newtonlogo[1.0cm]
+                \end{column}
+                \begin{column}{0.80\textwidth}
+                    \begin{minipage}[t]{0.95\textwidth}
+                        \vskip0.1cm
+                        \hfill
+                        \textcolor{white}{\textbf{\small \insertinstituicao}}
+                        \vskip0.1cm
+                        \hfill
+                        \textcolor{newtanorange}{\textbf{\tiny \insertprofessor}}
+                        \vskip0.1cm
+                    \end{minipage}
+                \end{column}
+            \end{columns}
+            \vskip0.1cm
+        \end{beamercolorbox}
+    }
+}
+
+
+
+% ============================================================================
+% SISTEMA DE MÚLTIPLOS ESTILOS DE LISTAS
+% ============================================================================
+
+% ESTILO PADRÃO DE LISTAS: Círculos brancos
+\newcommand{\listaspadrao}{
+    \setbeamertemplate{itemize items}[circle]
+    \setbeamercolor{itemize item}{fg=white}
+    \setbeamercolor{enumerate item}{fg=white}
+}
+
+% ESTILO MODERNO DE LISTAS: Quadrados coloridos
+\newcommand{\listasmoderno}{
+    \setbeamertemplate{itemize items}[square]
+    \setbeamercolor{itemize item}{fg=newtanorange}
+    \setbeamercolor{enumerate item}{fg=newtanorange}
+}
+
+% ESTILO MINIMALISTA DE LISTAS: Traços simples
+\newcommand{\listasminimalista}{
+    \setbeamertemplate{itemize items}[default]
+    \setbeamercolor{itemize item}{fg=white}
+    \setbeamercolor{enumerate item}{fg=white}
+}
+
+% ESTILO INSTITUCIONAL DE LISTAS: Triângulos roxos
+\newcommand{\listasinstitucional}{
+    \setbeamertemplate{itemize items}[triangle]
+    \setbeamercolor{itemize item}{fg=newtonpurple}
+    \setbeamercolor{enumerate item}{fg=newtonpurple}
+}
+
+% ============================================================================
+% SISTEMA DE MÚLTIPLOS ESTILOS DE BLOCOS
+% ============================================================================
+
+% ESTILO PADRÃO DE BLOCOS: Newton Paiva tradicional
+\newcommand{\blocospadrao}{
+    \setbeamercolor{block title}{bg=newtonpurple,fg=white}
+    \setbeamercolor{block body}{bg=white,fg=black}
+    \setbeamercolor{block title alerted}{bg=red!75!black,fg=white}
+    \setbeamercolor{block body alerted}{bg=white,fg=black}
+    \setbeamercolor{block title example}{bg=green!75!black,fg=white}
+    \setbeamercolor{block body example}{bg=white,fg=black}
+}
+
+% ESTILO MODERNO DE BLOCOS: Cores vibrantes
+\newcommand{\blocosmoderno}{
+    \setbeamercolor{block title}{bg=newtanorange,fg=black}
+    \setbeamercolor{block body}{bg=newtonbackground,fg=white}
+    \setbeamercolor{block title alerted}{bg=red,fg=white}
+    \setbeamercolor{block body alerted}{bg=newtonbackground,fg=white}
+    \setbeamercolor{block title example}{bg=green,fg=white}
+    \setbeamercolor{block body example}{bg=newtonbackground,fg=white}
+}
+
+% ESTILO MINIMALISTA DE BLOCOS: Tons suaves
+\newcommand{\blocosminimalista}{
+    \setbeamercolor{block title}{bg=newtongray,fg=white}
+    \setbeamercolor{block body}{bg=white,fg=black}
+    \setbeamercolor{block title alerted}{bg=newtongray!80,fg=white}
+    \setbeamercolor{block body alerted}{bg=white,fg=black}
+    \setbeamercolor{block title example}{bg=newtongray!60,fg=white}
+    \setbeamercolor{block body example}{bg=white,fg=black}
+}
+
+% ESTILO INSTITUCIONAL DE BLOCOS: Azul Newton Paiva
+\newcommand{\blocosinstitucional}{
+    \setbeamercolor{block title}{bg=newtonblue,fg=white}
+    \setbeamercolor{block body}{bg=white,fg=black}
+    \setbeamercolor{block title alerted}{bg=newtonlightblue,fg=white}
+    \setbeamercolor{block body alerted}{bg=white,fg=black}
+    \setbeamercolor{block title example}{bg=newtonblue!80,fg=white}
+    \setbeamercolor{block body example}{bg=white,fg=black}
+}
+
+% ESTILO ESCURO DE BLOCOS: Para fundos escuros
+\newcommand{\blocosescuro}{
+    \setbeamercolor{block title}{bg=white,fg=black}
+    \setbeamercolor{block body}{bg=newtongray!20,fg=white}
+    \setbeamercolor{block title alerted}{bg=newtanorange,fg=black}
+    \setbeamercolor{block body alerted}{bg=newtongray!20,fg=white}
+    \setbeamercolor{block title example}{bg=newtonpurple,fg=white}
+    \setbeamercolor{block body example}{bg=newtongray!20,fg=white}
+}
+
+% ============================================================================
+% COMANDOS PARA ESTILOS COMPLETOS COMBINADOS
+% ============================================================================
+
+% ESTILO COMPLETO PADRÃO
+\newcommand{\estilopadrao}{
+    \listaspadrao
+    \blocospadrao
+}
+
+% ESTILO COMPLETO MODERNO
+\newcommand{\estilomoderno}{
+    \listasmoderno
+    \blocosmoderno
+}
+
+% ESTILO COMPLETO MINIMALISTA
+\newcommand{\estilominimalista}{
+    \listasminimalista
+    \blocosminimalista
+}
+
+% ESTILO COMPLETO INSTITUCIONAL
+\newcommand{\estiloinstitucional}{
+    \listasinstitucional
+    \blocosinstitucional
+}
+
+% ESTILO COMPLETO ESCURO
+\newcommand{\estiloescuro}{
+    \listaspadrao
+    \blocosescuro
+}
+
+% Define o estilo padrão como inicial
+\estilopadrao
+
+% ============================================================================
+% SISTEMA DE LOGO NEWTON PAIVA COM FALLBACK
+% ============================================================================
+% Comando inteligente para inserir o logo com diferentes caminhos possíveis
+\newcommand{\newtonlogo}[1][1.2cm]{%                    % Comando com parâmetro opcional (altura padrão: 1.2cm)
+    \IfFileExists{../assets/logos/logNewtonPaiva.png}{% % Testa primeiro caminho (relativo pai)
+        \includegraphics[height=#1]{../assets/logos/logNewtonPaiva.png}%
+    }{%                                                  % Se não encontrar, testa segundo caminho
+        \IfFileExists{assets/logos/logNewtonPaiva.png}{% % Caminho relativo local
+            \includegraphics[height=#1]{assets/logos/logNewtonPaiva.png}%
+        }{%                                              % Se não encontrar nenhum arquivo de logo
+            % Cria um placeholder textual com a marca Newton Paiva
+            \fbox{\raisebox{-0.3\height}{\textcolor{newtonpurple}{\textbf{\small NEWTON PAIVA}}}}%
+        }%
+    }%
+}
+
+
+% Comando para slide de agradecimentos automático
+\newcommand{\slideagradecimentos}{
+    \slidelimpo{
+        \begin{center}
+            \Huge{Obrigado!}
+            \vspace{0.5cm}
+            
+            \newtonlogo[2cm]
+            
+            \vspace{0.5cm}
+            \Large{Perguntas?}
+            
+            \vspace{1cm}
+            \textcolor{newtanorange}{\textbf{\insertprofessor}}
+            \\
+            \textcolor{white}{\insertinstituicao}
+        \end{center}
+    }
+}
+
+% Comando para slide de título de seção (automático)
+\let\oldsection\section
+\renewcommand{\section}[1]{
+    \oldsection{#1}
+    % Opcionalmente, você pode descomentar a linha abaixo para 
+    % automaticamente criar slides de título para cada seção
+    % \secaocompleta{#1}
+}
+
+
+
+% ============================================================================
+% SISTEMA DE MÚLTIPLOS TEMPLATES
+% ============================================================================
+
+% TEMPLATE PADRÃO DE TITLE PAGE: Layout em colunas com imagem
+\newcommand{\titlepagepadrao}{
+    \setbeamertemplate{title page}{
+    % Usa cabeçalho simples para a title page
+    % Opções disponíveis:
+    % \cabecalhosimples     - apenas logo pequeno
+    % \cabecalhopadrao      - logo + disciplina + linhas
+    % \cabecalhocompleto    - logo + disciplina + seção
+    % \cabecalhoinstitucional - logo + instituição + professor
+    % \cabecalholimpo       - sem cabeçalho
+    
+    \cabecalhosimples
+    
+    \vskip1cm  % Espaçamento do topo
+    
+    % Layout em colunas para texto e imagem
+    \begin{columns}[onlytextwidth,T]
+        % Coluna da esquerda (60% da largura) - para texto institucional
+        \begin{column}{0.60\textwidth}
+            \vskip0.5cm
+            
+            % Nome da disciplina (mesmo que aparece no cabeçalho)
+            \begin{flushleft}
+                \textcolor{white}{\textbf{\LARGE \insertdisciplina}}
+            \end{flushleft}
+            
+            \vskip1.5cm
+            
+            % Nome da instituição
+            \begin{flushleft}
+                \textcolor{white}{\textbf{\Large \insertinstituicao}}
+            \end{flushleft}
+            
+            \vskip1cm
+            
+            % Nome do professor
+            \begin{flushleft}
+                \textcolor{white}{\textbf{\large \insertprofessor}}
+            \end{flushleft}
+            
+            \vskip1cm
+            
+            % Data
+            \begin{flushleft}
+                \textcolor{white}{\insertdate}
+            \end{flushleft}
+        \end{column}
+        
+        % Coluna da direita (40% da largura) - para imagem
+        \begin{column}{0.40\textwidth}
+            \begin{center}
+                % Logo da Newton Paiva (removido da capa)
+                % \newtonlogo[3cm]
+                
+                \vskip1cm
+                
+                % Imagem personalizada da capa
+                \ifx\@imagemcapa\@empty
+                    % Se não há imagem definida, mostra placeholder
+                    \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body}
+                        \vfill
+                        \textcolor{black}{\small Inserir imagem aqui}\\
+                        \textcolor{black}{\tiny Use: \textbackslash imagemcapa\{caminho\}}
+                        \vfill
+                    \end{beamercolorbox}
+                \else
+                    % Se há imagem definida, tenta diferentes caminhos
+                    \IfFileExists{\insertimagemcapa}{%
+                        \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{\insertimagemcapa}
+                    }{%
+                        \IfFileExists{../\insertimagemcapa}{%
+                            \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{../\insertimagemcapa}
+                        }{%
+                            % Se não encontrar a imagem, mostra placeholder com erro
+                            \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body alerted}
+                                \vfill
+                                \textcolor{black}{\small Imagem não encontrada}\\
+                                \textcolor{black}{\tiny \insertimagemcapa}
+                                \vfill
+                            \end{beamercolorbox}
+                        }%
+                    }%
+                \fi
+            \end{center}
+        \end{column}
+    \end{columns}
+    
+    \vfill                                               % Preenche espaço vertical restante
+    }
+}
+
+% TEMPLATE MINIMALISTA DE TITLE PAGE: Apenas texto centralizado
+\newcommand{\titlepageminimalista}{
+    \setbeamertemplate{title page}{
+        \cabecalholimpo
+        
+        \vfill
+        \begin{center}
+            % Logo centralizado
+            \newtonlogo[2.5cm]
+            
+            \vskip1.5cm
+            
+            % Nome da disciplina
+            \textcolor{white}{\textbf{\Huge \insertdisciplina}}
+            
+            \vskip1cm
+            
+            % Instituição e Professor
+            \textcolor{white}{\textbf{\Large \insertinstituicao}}
+            \\[0.5cm]
+            \textcolor{newtanorange}{\textbf{\large \insertprofessor}}
+            
+            \vskip1cm
+            
+            % Data
+            \textcolor{white}{\insertdate}
+        \end{center}
+        \vfill
+    }
+}
+
+% TEMPLATE INSTITUCIONAL DE TITLE PAGE: Foco na instituição
+\newcommand{\titlepageinstitucional}{
+    \setbeamertemplate{title page}{
+        \cabecalhoinstitucional
+        
+        \vskip1.5cm
+        
+        \begin{center}
+            % Nome da disciplina em destaque
+            \textcolor{white}{\textbf{\LARGE \insertdisciplina}}
+            
+            \vskip2cm
+            
+            % Logo grande centralizado
+            \newtonlogo[3cm]
+            
+            \vskip1.5cm
+            
+            % Imagem da capa se disponível
+            \ifx\@imagemcapa\@empty
+                \textcolor{white}{\large \insertdate}
+            \else
+                \IfFileExists{\insertimagemcapa}{%
+                    \includegraphics[width=0.6\textwidth,height=3cm,keepaspectratio]{\insertimagemcapa}
+                }{%
+                    \textcolor{white}{\large \insertdate}
+                }%
+            \fi
+        \end{center}
+        
+        \vfill
+    }
+}
+
+% TEMPLATE MODERNO DE TITLE PAGE: Layout assimétrico
+\newcommand{\titlepagemoderno}{
+    \setbeamertemplate{title page}{
+        \cabecalhosimples
+        
+        \vskip0.5cm
+        
+        % Layout assimétrico
+        \begin{textblock*}{\textwidth}(1cm,2cm)
+            % Título grande à esquerda
+            \textcolor{white}{\textbf{\fontsize{28}{34}\selectfont \insertdisciplina}}
+            
+            \vskip1cm
+            
+            % Linha decorativa colorida
+            \textcolor{newtanorange}{\rule{8cm}{3pt}}
+            
+            \vskip0.5cm
+            
+            % Informações em blocos
+            \begin{minipage}[t]{8cm}
+                \textcolor{white}{\textbf{\Large \insertinstituicao}}
+                \\[0.3cm]
+                \textcolor{newtanorange}{\textbf{\large \insertprofessor}}
+                \\[0.3cm]
+                \textcolor{white}{\insertdate}
+            \end{minipage}
+        \end{textblock*}
+        
+        % Logo e imagem no canto direito
+        \begin{textblock*}{6cm}(10cm,3cm)
+            \begin{center}
+                \newtonlogo[1.5cm]
+                
+                \vskip1cm
+                
+                \ifx\@imagemcapa\@empty
+                    % Elemento decorativo se não há imagem
+                    \begin{beamercolorbox}[wd=5cm,ht=3cm,center]{block title}
+                        \vfill
+                        \textcolor{white}{\large \textbf{NEWTON PAIVA}}
+                        \vfill
+                    \end{beamercolorbox}
+                \else
+                    \IfFileExists{\insertimagemcapa}{%
+                        \includegraphics[width=5cm,height=3cm,keepaspectratio]{\insertimagemcapa}
+                    }{%
+                        \begin{beamercolorbox}[wd=5cm,ht=3cm,center]{block title}
+                            \vfill
+                            \textcolor{white}{\large \textbf{NEWTON PAIVA}}
+                            \vfill
+                        \end{beamercolorbox}
+                    }%
+                \fi
+            \end{center}
+        \end{textblock*}
+        
+        \vfill
+    }
+}
+
+% TEMPLATE CLÁSSICO DE TITLE PAGE: Layout tradicional acadêmico
+\newcommand{\titlepageclassico}{
+    \setbeamertemplate{title page}{
+        \cabecalholimpo
+        
+        \vfill
+        
+        \begin{center}
+            % Cabeçalho institucional
+            \textcolor{white}{\textbf{\large \insertinstituicao}}
+            \\[0.2cm]
+            \textcolor{newtanorange}{\insertprofessor}
+            
+            \vskip1.5cm
+            
+            % Logo
+            \newtonlogo[2cm]
+            
+            \vskip2cm
+            
+            % Título da disciplina em caixa
+            \begin{beamercolorbox}[wd=0.8\textwidth,center,rounded=true,shadow=true]{block title}
+                \vskip0.3cm
+                \textbf{\Large \insertdisciplina}
+                \vskip0.3cm
+            \end{beamercolorbox}
+            
+            \vskip1.5cm
+            
+            % Imagem se disponível
+            \ifx\@imagemcapa\@empty
+                \textcolor{white}{\insertdate}
+            \else
+                \IfFileExists{\insertimagemcapa}{%
+                    \includegraphics[width=0.5\textwidth,height=2.5cm,keepaspectratio]{\insertimagemcapa}
+                    \\[0.5cm]
+                    \textcolor{white}{\insertdate}
+                }{%
+                    \textcolor{white}{\insertdate}
+                }%
+            \fi
+        \end{center}
+        
+        \vfill
+    }
+}
+
+% ============================================================================
+% SISTEMA DE MÚLTIPLOS TEMPLATES PARA FRAMES
+% ============================================================================
+
+% TEMPLATE PADRÃO DE FRAME: Layout simples
+\newcommand{\framepadrao}{
+    \setbeamertemplate{frametitle}{
+        \vskip0.3cm
+        \textcolor{white}{\textbf{\insertframetitle}}
+        \vskip0.3cm
+        \textcolor{white}{\rule{\textwidth}{1pt}}
+        \vskip0.3cm
+    }
+}
+
+% TEMPLATE MODERNO DE FRAME: Com decoração colorida
+\newcommand{\framemoderno}{
+    \setbeamertemplate{frametitle}{
+        \begin{beamercolorbox}[wd=\textwidth,ht=1.5cm,dp=0.3cm]{block title}
+            \vskip0.2cm
+            \hspace{0.5cm}
+            \textbf{\Large \insertframetitle}
+            \vfill
+        \end{beamercolorbox}
+        \vskip0.5cm
+    }
+}
+
+% TEMPLATE MINIMALISTA DE FRAME: Apenas título simples
+\newcommand{\frameminimalista}{
+    \setbeamertemplate{frametitle}{
+        \vskip0.5cm
+        \begin{center}
+            \textcolor{newtanorange}{\textbf{\Large \insertframetitle}}
+        \end{center}
+        \vskip0.5cm
+    }
+}
+
+% TEMPLATE LATERAL DE FRAME: Título na lateral
+\newcommand{\framelateral}{
+    \setbeamertemplate{frametitle}{
+        \begin{textblock*}{3cm}(0.2cm,1cm)
+            \rotatebox{90}{
+                \textcolor{newtanorange}{\textbf{\large \insertframetitle}}
+            }
+        \end{textblock*}
+        \vskip0.5cm
+        \hspace{1cm} % Espaço para o título lateral
+    }
+}
+
+% Define o template padrão de frame como inicial
+\framepadrao
+
+% ============================================================================
+% COMANDOS PARA ALTERNAR TEMPLATES FACILMENTE
+% ============================================================================
+
+% ============================================================================
+% TEMPLATES CUSTOMIZADOS CONFORME SOLICITAÇÃO
+% ============================================================================
+
+% TEMPLATE 1: Capa com cabeçalho simples
+\newcommand{\template1capasimples}{
+    \titlepagepadrao          % Capa padrão em colunas
+    \framepadrao              % Frames simples
+    \cabecalhosimples         % Cabeçalho simples nos slides
+    \estilopadrao            % Estilos padrão
+}
+
+% TEMPLATE 2: Cabeçalho padrão (versão elegante)
+\newcommand{\template2padraoelegante}{
+    \titlepageclassico        % Capa clássica
+    \framepadrao              % Frames simples
+    \cabecalhopadrao         % Cabeçalho padrão: Logo + Disciplina + linhas
+    \estilopadrao            % Estilos padrão
+}
+
+% TEMPLATE 3: Cabeçalho padrão (versão moderna)
+\newcommand{\template3padraomoderno}{
+    \titlepagemoderno         % Capa moderna assimétrica
+    \framemoderno             % Frames modernos
+    \cabecalhopadrao         % Cabeçalho padrão: Logo + Disciplina + linhas
+    \estilomoderno           % Estilos modernos
+}
+
+% TEMPLATE 4: Cabeçalho completo (versão institucional)
+\newcommand{\template4completoinstitucional}{
+    \titlepageinstitucional   % Capa institucional
+    \framepadrao              % Frames simples
+    \cabecalhocompleto       % Cabeçalho completo: Logo + Disciplina + Seção
+    \estiloinstitucional     % Estilos institucionais
+}
+
+% TEMPLATE 5: Cabeçalho completo (versão dinâmica)
+\newcommand{\template5completodinamico}{
+    \titlepagemoderno         % Capa moderna
+    \framemoderno             % Frames modernos
+    \cabecalhocompleto       % Cabeçalho completo: Logo + Disciplina + Seção
+    \estilomoderno           % Estilos modernos
+}
+
+% ============================================================================
+% TEMPLATES ORIGINAIS (mantidos para compatibilidade)
+% ============================================================================
+
+% Comando para usar template padrão (Layout em colunas)
+\newcommand{\usartemplatepadrao}{
+    \titlepagepadrao
+    \framepadrao
+    \cabecalhosimples
+    \estilopadrao
+}
+
+% Comando para usar template minimalista
+\newcommand{\usartemplateminimalista}{
+    \titlepageminimalista
+    \frameminimalista
+    \cabecalholimpo
+    \estilominimalista
+}
+
+% Comando para usar template institucional
+\newcommand{\usartemplateinstitucional}{
+    \titlepageinstitucional
+    \framepadrao
+    \cabecalhoinstitucional
+    \estiloinstitucional
+}
+
+% Comando para usar template moderno
+\newcommand{\usartemplatemoderno}{
+    \titlepagemoderno
+    \framemoderno
+    \cabecalhopadrao
+    \estilomoderno
+}
+
+% Comando para usar template clássico
+\newcommand{\usartemplateclassico}{
+    \titlepageclassico
+    \framepadrao
+    \cabecalhopadrao
+    \estilopadrao
+}
+
+% Comando para usar template escuro
+\newcommand{\usartemplateescuro}{
+    \titlepageminimalista
+    \framepadrao
+    \cabecalhosimples
+    \estiloescuro
+}
+
+% Define o template padrão como inicial
+% NOTA: Esta configuração pode ser alterada no documento principal
+% usando qualquer um dos comandos \usartemplate*
+
+% ============================================================================
+% CONFIGURAÇÕES OPCIONAIS E VALIDAÇÕES
+% ============================================================================
+
+% Validação de dependências críticas
+\@ifpackageloaded{xcolor}{}{
+    \PackageError{newton-paiva-style}{Package xcolor not loaded}{Please load xcolor package before newton-paiva-style}
+}
+
+% Comando para resetar todas as configurações para padrão
+\newcommand{\resetartemplates}{
+    \usartemplatepadrao
+}
+
+% Comando para aplicar apenas estilos sem alterar templates
+\newcommand{\aplicarestilos}[1]{
+    \ifthenelse{\equal{#1}{padrao}}{\estilopadrao}{}
+    \ifthenelse{\equal{#1}{moderno}}{\estilomoderno}{}
+    \ifthenelse{\equal{#1}{minimalista}}{\estilominimalista}{}
+    \ifthenelse{\equal{#1}{institucional}}{\estiloinstitucional}{}
+    \ifthenelse{\equal{#1}{escuro}}{\estiloescuro}{}
+}
+
+% Comando para aplicar apenas cabeçalhos sem alterar outros elementos
+\newcommand{\aplicarcabecalho}[1]{
+    \ifthenelse{\equal{#1}{padrao}}{\cabecalhopadrao}{}
+    \ifthenelse{\equal{#1}{simples}}{\cabecalhosimples}{}
+    \ifthenelse{\equal{#1}{completo}}{\cabecalhocompleto}{}
+    \ifthenelse{\equal{#1}{institucional}}{\cabecalhoinstitucional}{}
+    \ifthenelse{\equal{#1}{limpo}}{\cabecalholimpo}{}
+}
+
+% Aplica configuração padrão inicial
+% \template1capasimples  % Usa o template 1 como padrão (comentado para evitar erros)
+
+% ============================================================================
+% COMANDOS DE DEBUG E INFORMAÇÃO
+% ============================================================================
+
+% Comando para mostrar configurações atuais (útil para debug)
+\newcommand{\mostrarconfiguracoes}{
+    \begin{frame}[fragile]{Configurações Atuais do Template}
+        \begin{block}{Informações do Sistema}
+            \textbf{Disciplina:} \insertdisciplina \\
+            \textbf{Instituição:} \insertinstituicao \\
+            \textbf{Professor:} \insertprofessor \\
+            \textbf{Imagem da Capa:} \insertimagemcapa
+        \end{block}
+        
+        \begin{alertblock}{Dica}
+            Use os comandos \texttt{\textbackslash usartemplate*} para alternar entre diferentes estilos.
+        \end{alertblock}
+    \end{frame}
+}
+
+% Comando para validar se todas as informações foram definidas
+\newcommand{\validarinformacoes}{
+    \ifthenelse{\equal{\insertdisciplina}{Nome da Disciplina}}{
+        \PackageWarning{newton-paiva-style}{Disciplina não definida. Use \protect\disciplina{nome}}
+    }{}
+    \ifthenelse{\equal{\insertinstituicao}{Nome da Instituição}}{
+        \PackageWarning{newton-paiva-style}{Instituição não definida. Use \protect\instituicao{nome}}
+    }{}
+    \ifthenelse{\equal{\insertprofessor}{Nome do Professor}}{
+        \PackageWarning{newton-paiva-style}{Professor não definido. Use \protect\professor{nome}}
+    }{}
+}
+
+% ============================================================================
+% COMPATIBILIDADE E HOOKS
+% ============================================================================
+
+% Hook que executa na criação de cada frame (para validações)
+\BeforeBeginEnvironment{frame}{
+    % Pode ser usado para validações automáticas no futuro
+}
+
+% Comando para verificar se estamos usando Beamer
+\@ifclassloaded{beamer}{}{
+    \PackageError{newton-paiva-style}{This package requires beamer class}{Use \protect\documentclass{beamer}}
+}
+
+
+% ============================================================================
+% FIM DO PACKAGE NEWTON PAIVA STYLE
+% ============================================================================
