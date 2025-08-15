@@ -1,0 +1,200 @@
+% ============================================================================
+% EXEMPLO - GRADIENTES NEWTON PAIVA
+% Template demonstrando diferentes estilos de gradiente
+% ============================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% Usa o sistema de layouts Newton Paiva
+\usepackage{../styles/newton-paiva-layouts}
+
+% Pacotes úteis
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+
+% ============================================================================
+% CONFIGURAÇÕES DA APRESENTAÇÃO
+% ============================================================================
+
+% Título e subtítulo
+\title{Demonstração de Gradientes}
+\subtitle{Planos de fundo personalizados Newton Paiva}
+
+% Informações da Newton Paiva
+\disciplina{Design de Apresentações}
+\instituicao{Centro Universitário Newton Paiva}
+\professor{Professor Exemplo}
+
+% Data
+\date{\today}
+
+% Seção atual
+\secaoatual{Gradientes}
+
+% ============================================================================
+% INÍCIO DO DOCUMENTO
+% ============================================================================
+\begin{document}
+
+% ============================================================================
+% TÍTULO COM GRADIENTE HORIZONTAL (PADRÃO)
+% ============================================================================
+\titlepagepadrao
+\begin{frame}[plain]
+    \maketitle
+\end{frame}
+
+% ============================================================================
+% SLIDES COM DIFERENTES GRADIENTES
+% ============================================================================
+
+\layoutpadrao
+
+\begin{frame}{Gradiente Horizontal (Padrão)}
+    \begin{block}{Características}
+        \begin{itemize}
+            \item Gradiente da esquerda para direita
+            \item Roxo/magenta → Laranja/vermelho
+            \item Baseado na imagem fornecida
+            \item Ideal para a maioria dos slides
+        \end{itemize}
+    \end{block}
+    
+    \begin{exampleblock}{Comando}
+        \texttt{\textbackslash fundogradiente} (já ativo por padrão)
+    \end{exampleblock}
+\end{frame}
+
+% Mudando para gradiente vertical
+\fundogradientevertical
+
+\begin{frame}{Gradiente Vertical}
+    \begin{center}
+        \vfill
+        \Huge{\textcolor{white}{\textbf{Gradiente Vertical}}}
+        \vspace{1cm}
+        
+        \Large{\textcolor{white}{De cima para baixo}}
+        \vspace{1cm}
+        
+        \begin{itemize}
+            \item Roxo/magenta no topo
+            \item Laranja/vermelho na base
+            \item Efeito dramático
+            \item Ideal para slides de seção
+        \end{itemize}
+        
+        \vspace{1cm}
+        \texttt{\textcolor{yellow}{\textbackslash fundogradientevertical}}
+        \vfill
+    \end{center}
+\end{frame}
+
+% Mudando para gradiente radial
+\fundogradienteradial
+
+\begin{frame}{Gradiente Radial}
+    \begin{center}
+        \vfill
+        \Huge{\textcolor{white}{\textbf{Gradiente Radial}}}
+        \vspace{1cm}
+        
+        \Large{\textcolor{white}{Do centro para as bordas}}
+        \vspace{1cm}
+        
+        \begin{itemize}
+            \item Centro com cor intermediária
+            \item Bordas com roxo/magenta
+            \item Efeito de profundidade
+            \item Destaca o conteúdo central
+        \end{itemize}
+        
+        \vspace{1cm}
+        \texttt{\textcolor{yellow}{\textbackslash fundogradienteradial}}
+        \vfill
+    \end{center>
+\end{frame}
+
+% Voltando para fundo sólido
+\fundosolido
+
+\begin{frame}{Fundo Sólido Original}
+    \begin{alertblock}{Comparação}
+        Este é o fundo sólido original da Newton Paiva para comparação.
+    \end{alertblock}
+    
+    \begin{block}{Comandos Disponíveis}
+        \begin{itemize}
+            \item \texttt{\textbackslash fundogradiente} - Gradiente horizontal (padrão)
+            \item \texttt{\textbackslash fundogradientevertical} - Gradiente vertical
+            \item \texttt{\textbackslash fundogradienteradial} - Gradiente radial
+            \item \texttt{\textbackslash fundosolido} - Fundo sólido original
+        \end{itemize}
+    \end{block>
+    
+    \begin{exampleblock}{Uso}
+        Coloque o comando antes do slide que quer alterar o fundo.
+    \end{exampleblock>
+\end{frame}
+
+% Voltando para o gradiente horizontal
+\fundogradiente
+
+\begin{frame}{Dicas de Uso}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Gradiente Horizontal}
+                \begin{itemize}
+                    \item Slides normais
+                    \item Conteúdo geral
+                    \item Leitura fácil
+                \end{itemize}
+            \end{block}
+            
+            \begin{block}{Gradiente Vertical}
+                \begin{itemize}
+                    \item Slides de título de seção
+                    \item Apresentações dramáticas
+                    \item Destaque visual
+                \end{itemize}
+            \end{block>
+        \end{column>
+        \begin{column>{0.5\textwidth}
+            \begin{exampleblock}{Gradiente Radial}
+                \begin{itemize}
+                    \item Slides de foco central
+                    \item Conclusões importantes
+                    \item Chamadas de atenção
+                \end{itemize}
+            \end{exampleblock>
+            
+            \begin{alertblock}{Fundo Sólido}
+                \begin{itemize}
+                    \item Compatibilidade máxima
+                    \item Impressão em preto/branco
+                    \item Ambiente conservador
+                \end{itemize>
+            \end{alertblock>
+        \end{column>
+    \end{columns>
+\end{frame>
+
+\begin{frame>
+    \begin{center>
+        \vfill
+        \Huge{\textcolor{white}{\textbf{Obrigado!}}}
+        \vspace{1cm}
+        
+        \newtonlogo[3cm]
+        
+        \vspace{1cm}
+        \Large{\textcolor{white}{Gradientes Newton Paiva}}
+        
+        \vspace{1.5cm}
+        \textcolor{newtanorange}{\textbf{Sistema de Apresentações}}
+        \\[0.3cm]
+        \textcolor{white}{Centro Universitário Newton Paiva}
+        \vfill
+    \end{center>
+\end{frame>
+
+\end{document>
