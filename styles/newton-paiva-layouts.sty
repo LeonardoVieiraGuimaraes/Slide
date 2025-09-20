@@ -1,0 +1,665 @@
+% ============================================================================
+% ESTILO NEWTON PAIVA COM MÚLTIPLOS LAYOUTS
+% Versão: 2.0 - Sistema de Layouts Flexível
+% Autor: Newton Paiva Template System
+% Data: Agosto 2025
+% ============================================================================
+
+\ProvidesPackage{newton-paiva-layouts}
+
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{geometry}
+\RequirePackage{tikz}
+
+% Configurações para formato 16:9
+\geometry{paperwidth=16cm,paperheight=9cm}
+
+% ============================================================================
+% CORES PERSONALIZADAS NEWTON PAIVA
+% ============================================================================
+\definecolor{newtonblue}{RGB}{0, 51, 102}
+\definecolor{newtonlightblue}{RGB}{70, 130, 180}
+\definecolor{newtongray}{RGB}{128, 128, 128}
+\definecolor{newtonpurple}{RGB}{146, 39, 143}      % Cor roxa do logo
+\definecolor{newtanorange}{RGB}{255, 165, 0}       % Cor laranja do logo
+\definecolor{newtonbackground}{HTML}{5c2438}       % Cor de fundo personalizada
+\definecolor{newtondarkgray}{RGB}{64, 64, 64}      % Cinza escuro
+\definecolor{newtonlightgray}{RGB}{200, 200, 200}  % Cinza claro
+
+% CORES DO GRADIENTE PERSONALIZADO (baseado na imagem)
+\definecolor{gradientpurple}{RGB}{142, 45, 153}    % Roxo/magenta do lado esquerdo
+\definecolor{gradientmiddle}{RGB}{165, 55, 120}    % Cor intermediária
+\definecolor{gradientorange}{RGB}{235, 94, 40}     % Laranja/vermelho do lado direito
+
+% ============================================================================
+% CONFIGURAÇÕES BÁSICAS DO TEMA
+% ============================================================================
+\setbeamercolor{structure}{fg=newtonpurple}
+\setbeamercolor{palette primary}{bg=newtonpurple,fg=white}
+\setbeamercolor{palette secondary}{bg=newtonlightblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=newtongray,fg=white}
+
+% Configuração do plano de fundo
+\setbeamercolor{background canvas}{bg=newtonbackground}
+\setbeamercolor{normal text}{fg=white}
+\setbeamercolor{item}{fg=white}
+\setbeamercolor{subitem}{fg=white}
+\setbeamercolor{subsubitem}{fg=white}
+\setbeamercolor{headline}{bg=newtonbackground}
+
+% Configuração de fonte
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+
+% Remove símbolos de navegação
+\setbeamertemplate{navigation symbols}{}
+
+% ============================================================================
+% PLANO DE FUNDO COM GRADIENTE PERSONALIZADO
+% ============================================================================
+% Template de fundo com gradiente horizontal (roxo → laranja)
+\setbeamertemplate{background canvas}{%
+    \begin{tikzpicture}[overlay,remember picture]
+        \fill[left color=gradientpurple,right color=gradientorange] 
+              (current page.south west) rectangle (current page.north east);
+        
+        % Overlay sutil para melhor contraste do texto
+        \fill[black,opacity=0.1] 
+              (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}%
+}
+
+% Comando para ativar o gradiente personalizado
+\newcommand{\fundogradiente}{%
+    \setbeamertemplate{background canvas}{%
+        \begin{tikzpicture}[overlay,remember picture]
+            \fill[left color=gradientpurple,right color=gradientorange] 
+                  (current page.south west) rectangle (current page.north east);
+            
+            % Overlay sutil para melhor contraste do texto
+            \fill[black,opacity=0.1] 
+                  (current page.south west) rectangle (current page.north east);
+        \end{tikzpicture}%
+    }%
+}
+
+% Comando para ativar o fundo sólido original
+\newcommand{\fundosolido}{%
+    \setbeamercolor{background canvas}{bg=newtonbackground}%
+}
+
+% Comando para fundo gradiente vertical (roxo em cima → laranja embaixo)
+\newcommand{\fundogradientevertical}{%
+    \setbeamertemplate{background canvas}{%
+        \begin{tikzpicture}[overlay,remember picture]
+            \fill[top color=gradientpurple,bottom color=gradientorange] 
+                  (current page.south west) rectangle (current page.north east);
+            
+            % Overlay sutil para melhor contraste do texto
+            \fill[black,opacity=0.15] 
+                  (current page.south west) rectangle (current page.north east);
+        \end{tikzpicture}%
+    }%
+}
+
+% Comando para fundo gradiente radial (centro → bordas)
+\newcommand{\fundogradienteradial}{%
+    \setbeamertemplate{background canvas}{%
+        \begin{tikzpicture}[overlay,remember picture]
+            \fill[inner color=gradientmiddle,outer color=gradientpurple] 
+                  (current page.south west) rectangle (current page.north east);
+            
+            % Overlay sutil para melhor contraste do texto
+            \fill[black,opacity=0.1] 
+                  (current page.south west) rectangle (current page.north east);
+        \end{tikzpicture}%
+    }%
+}
+
+% Configuração dos blocos
+\setbeamercolor{block title}{bg=newtonpurple,fg=white}
+\setbeamercolor{block body}{bg=white,fg=black}
+\setbeamercolor{block title alerted}{bg=red!75!black,fg=white}
+\setbeamercolor{block body alerted}{bg=white,fg=black}
+\setbeamercolor{block title example}{bg=green!75!black,fg=white}
+\setbeamercolor{block body example}{bg=white,fg=black}
+
+% Configuração de listas
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=white}
+\setbeamercolor{enumerate item}{fg=white}
+
+% ============================================================================
+% SISTEMA DE LOGO COM FALLBACK
+% ============================================================================
+\newcommand{\newtonlogo}[1][1.2cm]{%
+    \IfFileExists{../assets/logos/logNewtonPaiva.png}{%
+        \includegraphics[height=#1]{../assets/logos/logNewtonPaiva.png}%
+    }{%
+        \IfFileExists{assets/logos/logNewtonPaiva.png}{%
+            \includegraphics[height=#1]{assets/logos/logNewtonPaiva.png}%
+        }{%
+            \fbox{\raisebox{-0.3\height}{\textcolor{newtonpurple}{\textbf{\small NEWTON PAIVA}}}}%
+        }%
+    }%
+}
+
+% ============================================================================
+% SISTEMA DE INFORMAÇÕES PERSONALIZADAS
+% ============================================================================
+\newcommand{\disciplina}[1]{\def\@disciplina{#1}}
+\newcommand{\insertdisciplina}{\@disciplina}
+\disciplina{Nome da Disciplina}
+
+\newcommand{\instituicao}[1]{\def\@instituicao{#1}}
+\newcommand{\insertinstituicao}{\@instituicao}
+\instituicao{Centro Universitário Newton Paiva}
+
+\newcommand{\professor}[1]{\def\@professor{#1}}
+\newcommand{\insertprofessor}{\@professor}
+\professor{Nome do Professor}
+
+\newcommand{\imagemcapa}[1]{\def\@imagemcapa{#1}}
+\newcommand{\insertimagemcapa}{\@imagemcapa}
+\imagemcapa{}
+
+\newcommand{\secaoatual}[1]{\def\@secaoatual{#1}}
+\newcommand{\insertsecaoatual}{\@secaoatual}
+\secaoatual{Seção Atual}
+
+% ============================================================================
+% SISTEMA DE CABEÇALHOS MÚLTIPLOS
+% ============================================================================
+
+% COMANDO AUXILIAR: Conteúdo do cabeçalho padrão (reutilizável)
+\newcommand{\conteudocabecalhopadrao}{
+    
+        \vskip0.04cm
+        \begin{columns}
+            \begin{column}{0.15\textwidth}
+                \hspace*{0.5cm}
+                \newtonlogo[1.8cm]
+            \end{column}
+            \begin{column}{0.85\textwidth}
+                \begin{minipage}[t]{0.95\textwidth}
+                    \textcolor{white}{\rule{13cm}{1.0pt}}
+                    \vskip0.3cm
+                    \hfill
+                    \textcolor{white}{\textbf{\insertdisciplina}}
+                    \vskip0.3cm
+                    \textcolor{white}{\rule{13cm}{1.0pt}}
+                \end{minipage}
+            \end{column}
+        \end{columns}
+        \vskip0.04cm
+    
+}
+
+% COMANDO AUXILIAR: Conteúdo do cabeçalho simples (reutilizável)
+\newcommand{\conteudocabecalhosimples}{
+    
+        \vskip0.2cm
+        \hspace*{0.5cm}
+        \newtonlogo[0.8cm]
+        \vskip0.2cm
+    
+}
+
+% COMANDO AUXILIAR: Conteúdo do cabeçalho institucional (reutilizável)
+\newcommand{\conteudocabecalhoinstitucional}{
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.8cm,dp=0.3cm]{headline}
+        \vskip0.04cm
+        \begin{columns}
+            \begin{column}{0.15\textwidth}
+                \hspace*{0.5cm}
+                \newtonlogo[1.6cm]
+            \end{column}
+            \begin{column}{0.85\textwidth}
+                \begin{minipage}[t]{0.95\textwidth}
+                    \vskip0.2cm
+                    \hfill
+                    \textcolor{white}{\textbf{\insertinstituicao}}
+                    \vskip0.2cm
+                    \hfill
+                    \textcolor{newtanorange}{\textbf{\insertprofessor}}
+                    \vskip0.2cm
+                    \textcolor{white}{\rule{13cm}{1.0pt}}
+                \end{minipage}
+            \end{column}
+        \end{columns}
+        \vskip0.04cm
+    \end{beamercolorbox}
+}
+
+% CABEÇALHO PADRÃO: Logo + Disciplina + Linhas decorativas
+\newcommand{\cabecalhopadrao}{
+    \setbeamertemplate{headline}{
+        \conteudocabecalhopadrao
+    }
+}
+
+
+\newcommand{\cabecalhosimples}{
+    \setbeamertemplate{headline}{
+        \conteudocabecalhosimples
+    }
+}
+
+% CABEÇALHO COMPLETO: Logo + Disciplina + Seção + Professor
+\newcommand{\cabecalhocompleto}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2.5cm,dp=0.3cm]{headline}
+            \vskip0.04cm
+            \begin{columns}
+                \begin{column}{0.12\textwidth}
+                    \hspace*{0.3cm}
+                    \newtonlogo[1.5cm]
+                \end{column}
+                \begin{column}{0.88\textwidth}
+                    \begin{minipage}[t]{0.95\textwidth}
+                        \textcolor{white}{\rule{13.5cm}{1.5pt}}
+                        \vskip0.2cm
+                        \hfill
+                        \textcolor{white}{\textbf{\large \insertdisciplina}}
+                        \vskip0.1cm
+                        \hfill
+                        \textcolor{newtanorange}{\textbf{\insertsecaoatual}}
+                        \vskip0.1cm
+                        \hfill
+                        \textcolor{white}{\small \insertprofessor}
+                        \vskip0.2cm
+                        \textcolor{white}{\rule{13.5cm}{1.5pt}}
+                    \end{minipage}
+                \end{column}
+            \end{columns}
+            \vskip0.04cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO INSTITUCIONAL: Logo + Instituição + Professor
+\newcommand{\cabecalhoinstitucional}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=1.8cm,dp=0.3cm]{headline}
+            \vskip0.04cm
+            \begin{columns}
+                \begin{column}{0.15\textwidth}
+                    \hspace*{0.5cm}
+                    \newtonlogo[1.6cm]
+                \end{column}
+                \begin{column}{0.85\textwidth}
+                    \begin{minipage}[t]{0.95\textwidth}
+                        \vskip0.2cm
+                        \hfill
+                        \textcolor{white}{\textbf{\insertinstituicao}}
+                        \vskip0.2cm
+                        \hfill
+                        \textcolor{newtanorange}{\textbf{\insertprofessor}}
+                        \vskip0.2cm
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                    \end{minipage}
+                \end{column}
+            \end{columns}
+            \vskip0.04cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO MINIMALISTA: Apenas linha decorativa
+\newcommand{\cabecalhominimalista}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=0.5cm,dp=0.1cm]{headline}
+            \vskip0.1cm
+            \textcolor{newtanorange}{\rule{\paperwidth}{2pt}}
+            \vskip0.1cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO LIMPO: Sem cabeçalho
+\newcommand{\cabecalholimpo}{
+    \setbeamertemplate{headline}{}
+}
+
+% ============================================================================
+% SISTEMA DE RODAPÉS
+% ============================================================================
+
+% RODAPÉ PADRÃO: Numeração simples
+\newcommand{\rodapepadrao}{
+    \setbeamertemplate{footline}{
+        \hfill
+        \usebeamercolor[fg]{page number in head/foot}
+        \usebeamerfont{page number in head/foot}
+        \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt
+    }
+}
+
+% RODAPÉ COMPLETO: Com informações adicionais
+\newcommand{\rodapecompleto}{
+    \setbeamertemplate{footline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=0.8cm,dp=0.2cm]{footline}
+            \begin{columns}
+                \begin{column}{0.33\textwidth}
+                    \hspace*{0.5cm}
+                    \textcolor{white}{\tiny \insertdisciplina}
+                \end{column}
+                \begin{column}{0.34\textwidth}
+                    \centering
+                    \textcolor{newtanorange}{\tiny \insertprofessor}
+                \end{column}
+                \begin{column}{0.33\textwidth}
+                    \hfill
+                    \textcolor{white}{\tiny \insertframenumber\,/\,\inserttotalframenumber}
+                    \hspace*{0.5cm}
+                \end{column}
+            \end{columns}
+        \end{beamercolorbox}
+    }
+}
+
+% RODAPÉ LIMPO: Sem rodapé
+\newcommand{\rodapelimpo}{
+    \setbeamertemplate{footline}{}
+}
+
+% ============================================================================
+% SISTEMA DE TEMPLATES DE TITLE PAGE
+% ============================================================================
+
+% TITLE PAGE PADRÃO: Layout em duas colunas
+\newcommand{\titlepagepadrao}{
+    \setbeamertemplate{title page}{
+        % REUTILIZA O COMANDO AUXILIAR DO CABEÇALHO PADRÃO
+        \conteudocabecalhosimples
+        
+        \vskip1cm
+        
+        \begin{columns}[onlytextwidth,T]
+            \begin{column}{0.60\textwidth}
+                \vskip0.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\LARGE \insertdisciplina}}
+                \end{flushleft}
+                \vskip1.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\Large \insertinstituicao}}
+                \end{flushleft}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\large \insertprofessor}}
+                \end{flushleft}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\insertdate}
+                \end{flushleft}
+            \end{column}
+
+            \begin{column}{0.40\textwidth}
+                \begin{center}
+                    \vskip1cm
+                    \ifx\@imagemcapa\@empty
+                        \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body}
+                            \vfill
+                            \textcolor{black}{\small Inserir imagem aqui}\\
+                            \textcolor{black}{\tiny Use: \textbackslash imagemcapa\{caminho\}}
+                            \vfill
+                        \end{beamercolorbox}
+                    \else
+                        \IfFileExists{\insertimagemcapa}{%
+                            \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{\insertimagemcapa}
+                        }{%
+                            \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body alerted}
+                                \vfill
+                                \textcolor{black}{\small Imagem não encontrada}\\
+                                \textcolor{black}{\tiny \insertimagemcapa}
+                                \vfill
+                            \end{beamercolorbox}
+                        }%
+                    \fi
+                \end{center}
+            \end{column}
+        \end{columns}
+        \vfill
+    }
+}
+
+% TITLE PAGE COM CABEÇALHO SIMPLES: Layout em duas colunas + cabeçalho simples
+\newcommand{\titlepagesimples}{
+    \setbeamertemplate{title page}{
+        % REUTILIZA O COMANDO AUXILIAR DO CABEÇALHO SIMPLES
+        \conteudocabecalhosimples
+        
+        \vskip1cm
+        
+        \begin{columns}[onlytextwidth,T]
+            \begin{column}{0.60\textwidth}
+                \vskip0.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\LARGE \insertdisciplina}}
+                \end{flushleft}
+                \vskip1.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\Large \insertinstituicao}}
+                \end{flushleft}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\large \insertprofessor}}
+                \end{flushleft}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\insertdate}
+                \end{flushleft}
+            \end{column}
+
+            \begin{column}{0.40\textwidth}
+                \begin{center}
+                    \vskip1cm
+                    \ifx\@imagemcapa\@empty
+                        \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body}
+                            \vfill
+                            \textcolor{black}{\small Inserir imagem aqui}\\
+                            \textcolor{black}{\tiny Use: \textbackslash imagemcapa\{caminho\}}
+                            \vfill
+                        \end{beamercolorbox}
+                    \else
+                        \IfFileExists{\insertimagemcapa}{%
+                            \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{\insertimagemcapa}
+                        }{%
+                            \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body alerted}
+                                \vfill
+                                \textcolor{black}{\small Imagem não encontrada}\\
+                                \textcolor{black}{\tiny \insertimagemcapa}
+                                \vfill
+                            \end{beamercolorbox}
+                        }%
+                    \fi
+                \end{center}
+            \end{column}
+        \end{columns}
+        \vfill
+    }
+}
+
+% TITLE PAGE INSTITUCIONAL: Layout em duas colunas + cabeçalho institucional
+\newcommand{\titlepageinstitucional}{
+    \setbeamertemplate{title page}{
+        % REUTILIZA O COMANDO AUXILIAR DO CABEÇALHO INSTITUCIONAL
+        \conteudocabecalhoinstitucional
+        
+        \vskip1cm
+        
+        \begin{columns}[onlytextwidth,T]
+            \begin{column}{0.60\textwidth}
+                \vskip0.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\LARGE \insertdisciplina}}
+                \end{flushleft}
+                \vskip1.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\Large \insertinstituicao}}
+                \end{flushleft}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\large \insertprofessor}}
+                \end{flushleft}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\insertdate}
+                \end{flushleft}
+            \end{column}
+
+            \begin{column}{0.40\textwidth}
+                \begin{center}
+                    \vskip1cm
+                    \ifx\@imagemcapa\@empty
+                        \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body}
+                            \vfill
+                            \textcolor{black}{\small Inserir imagem aqui}\\
+                            \textcolor{black}{\tiny Use: \textbackslash imagemcapa\{caminho\}}
+                            \vfill
+                        \end{beamercolorbox}
+                    \else
+                        \IfFileExists{\insertimagemcapa}{%
+                            \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{\insertimagemcapa}
+                        }{%
+                            \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body alerted}
+                                \vfill
+                                \textcolor{black}{\small Imagem não encontrada}\\
+                                \textcolor{black}{\tiny \insertimagemcapa}
+                                \vfill
+                            \end{beamercolorbox}
+                        }%
+                    \fi
+                \end{center}
+            \end{column}
+        \end{columns}
+        \vfill
+    }
+}
+
+% ============================================================================
+% SISTEMA DE LAYOUTS COMPLETOS
+% ============================================================================
+
+% TITLE PAGE MODERNO: Layout horizontal com título em destaque
+\newcommand{\titlepagemoderno}{
+    \setbeamertemplate{title page}{
+        \vfill
+        \begin{columns}[onlytextwidth,T]
+            \begin{column}{0.65\textwidth}
+                \vskip1cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\Huge \inserttitle}}
+                    \ifx\insertsubtitle\@empty%
+                    \else%
+                        \vskip0.5cm
+                        \textcolor{newtanorange}{\textbf{\Large \insertsubtitle}}
+                    \fi%
+                \end{flushleft}
+                \vskip1cm
+                \textcolor{newtanorange}{\rule{10cm}{3pt}}
+                \vskip1.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\Large \insertdisciplina}}
+                \end{flushleft}
+                \vskip0.8cm
+                \begin{flushleft}
+                    \textcolor{white}{\textbf{\large \insertinstituicao}}
+                \end{flushleft}
+                \vskip0.5cm
+                \begin{flushleft}
+                    \textcolor{newtanorange}{\textbf{\insertprofessor}}
+                \end{flushleft}
+                \vskip0.5cm
+                \begin{flushleft}
+                    \textcolor{white}{\insertdate}
+                \end{flushleft}
+            \end{column}
+            \begin{column}{0.35\textwidth}
+                \begin{center}
+                    \vskip2cm
+                    \newtonlogo[4cm]
+                    \vskip1cm
+                    \textcolor{newtonpurple}{\rule{6cm}{2pt}}
+                    \vskip0.5cm
+                    \textcolor{white}{\small \textbf{CENTRO UNIVERSITÁRIO}}
+                    \\[0.2cm]
+                    \textcolor{newtanorange}{\textbf{NEWTON PAIVA}}
+                    \vskip1cm
+                    \textcolor{newtonpurple}{\rule{4cm}{1pt}}
+                \end{center}
+            \end{column}
+        \end{columns}
+        \vfill
+    }
+}
+
+% TITLE PAGE CLÁSSICO: Layout centralizado vertical
+\newcommand{\titlepageclassico}{
+    \setbeamertemplate{title page}{
+        \vfill
+        \begin{center}
+            \newtonlogo[3cm]
+            \vskip1cm
+            \textcolor{white}{\textbf{\LARGE \insertinstituicao}}
+            \vskip0.5cm
+            \textcolor{newtanorange}{\rule{10cm}{2pt}}
+            \vskip1cm
+            \textcolor{white}{\textbf{\Large \insertdisciplina}}
+            \vskip1.5cm
+            \textcolor{white}{\textbf{\large \insertprofessor}}
+            \vskip1cm
+            \textcolor{white}{\insertdate}
+        \end{center}
+        \vfill
+    }
+}
+
+% ============================================================================
+% SISTEMA DE LAYOUTS COMPLETOS
+% ============================================================================
+
+% LAYOUT PADRÃO: Para slides normais de conteúdo
+\newcommand{\layoutpadrao}{
+    \cabecalhopadrao
+    \rodapepadrao
+}
+
+% LAYOUT APRESENTAÇÃO: Para apresentações formais
+\newcommand{\layoutapresentacao}{
+    \cabecalhocompleto
+    \rodapecompleto
+}
+
+% LAYOUT AULA: Para aulas
+\newcommand{\layoutaula}{
+    \cabecalhopadrao
+    \rodapecompleto
+}
+
+% LAYOUT EXERCÍCIO: Para exercícios
+\newcommand{\layoutexercicio}{
+    \cabecalhosimples
+    \rodapepadrao
+}
+
+% LAYOUT SEÇÃO: Para slides de seção
+\newcommand{\layoutsecao}{
+    \cabecalhoinstitucional
+    \rodapelimpo
+}
+
+% LAYOUT LIMPO: Para slides especiais
+\newcommand{\layoutlimpo}{
+    \cabecalholimpo
+    \rodapelimpo
+}
+
+% ============================================================================
+% ATIVAÇÃO DO LAYOUT PADRÃO
+% ============================================================================
+\layoutpadrao

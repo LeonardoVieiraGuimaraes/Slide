@@ -1,0 +1,343 @@
+% Estilo personalizado para apresentações Newton Paiva
+% Para usar: \usepackage{styles/newton-paiva-style}
+
+\ProvidesPackage{newton-paiva-style}
+
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+% Configurações para formato 16:9
+\geometry{paperwidth=16cm,paperheight=9cm}
+
+% Cores personalizadas da Newton Paiva
+\definecolor{newtonblue}{RGB}{0, 51, 102}
+\definecolor{newtonlightblue}{RGB}{70, 130, 180}
+\definecolor{newtongray}{RGB}{128, 128, 128}
+\definecolor{newtonpurple}{RGB}{146, 39, 143}  % Cor roxa do logo
+\definecolor{newtanorange}{RGB}{255, 165, 0}   % Cor laranja do logo
+\definecolor{newtonbackground}{HTML}{5c2438}    % Cor de fundo personalizada
+
+% Configuração do tema
+\setbeamercolor{structure}{fg=newtonpurple}
+\setbeamercolor{palette primary}{bg=newtonpurple,fg=white}
+\setbeamercolor{palette secondary}{bg=newtonlightblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=newtongray,fg=white}
+
+% Configuração do plano de fundo
+\setbeamercolor{background canvas}{bg=newtonbackground}
+\setbeamercolor{normal text}{fg=white}
+\setbeamercolor{item}{fg=white}
+\setbeamercolor{subitem}{fg=white}
+\setbeamercolor{subsubitem}{fg=white}
+\setbeamercolor{headline}{bg=newtonbackground}
+\setbeamercolor{item}{fg=white}
+\setbeamercolor{subitem}{fg=white}
+\setbeamercolor{subsubitem}{fg=white}
+
+% Fonte para título
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+% Remove símbolos de navegação
+\setbeamertemplate{navigation symbols}{}
+
+% Numeração de páginas
+\setbeamertemplate{footline}{
+    \hfill
+    \usebeamercolor[fg]{page number in head/foot}
+    \usebeamerfont{page number in head/foot}
+    \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt
+}
+
+% % Configuração do cabeçalho com logo
+% \setbeamertemplate{headline}{
+%     \begin{beamercolorbox}[wd=\paperwidth,ht=1.5cm,dp=0.5cm]{headline}
+%         \vskip0.3cm
+%         \hfill
+%         \newtonlogo[1cm]
+%         \hspace*{1cm}
+%         \vskip0.2cm
+%     \end{beamercolorbox}
+% }
+
+% Customização de listas
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=white}
+\setbeamercolor{enumerate item}{fg=white}
+
+% Configuração dos blocos para fundo escuro
+\setbeamercolor{block title}{bg=newtonpurple,fg=white}
+\setbeamercolor{block body}{bg=white,fg=black}
+\setbeamercolor{block title alerted}{bg=red!75!black,fg=white}
+\setbeamercolor{block body alerted}{bg=white,fg=black}
+\setbeamercolor{block title example}{bg=green!75!black,fg=white}
+\setbeamercolor{block body example}{bg=white,fg=black}
+
+% Configuração do logo Newton Paiva com fallback
+\RequirePackage{ifthen}
+\newcommand{\newtonlogo}[1][1.2cm]{%
+    \IfFileExists{../assets/logos/logNewtonPaiva.png}{%
+        \includegraphics[height=#1]{../assets/logos/logNewtonPaiva.png}%
+    }{%
+        \IfFileExists{assets/logos/logNewtonPaiva.png}{%
+            \includegraphics[height=#1]{assets/logos/logNewtonPaiva.png}%
+        }{%
+            \fbox{\raisebox{-0.3\height}{\textcolor{newtonpurple}{\textbf{\small NEWTON PAIVA}}}}%
+        }%
+    }%
+}
+
+% ============================================================================
+% SISTEMA DE INFORMAÇÕES PERSONALIZADAS NEWTON PAIVA
+% ============================================================================
+\newcommand{\disciplina}[1]{\def\@disciplina{#1}}    
+\newcommand{\insertdisciplina}{\@disciplina}         
+\disciplina{Nome da Disciplina}                      
+
+\newcommand{\instituicao}[1]{\def\@instituicao{#1}}
+\newcommand{\insertinstituicao}{\@instituicao}
+\instituicao{Centro Universitário Newton Paiva}
+
+\newcommand{\professor}[1]{\def\@professor{#1}}
+\newcommand{\insertprofessor}{\@professor}
+\professor{Nome do Professor}
+
+% Comando para imagem da capa
+\newcommand{\imagemcapa}[1]{\def\@imagemcapa{#1}}
+\newcommand{\insertimagemcapa}{\@imagemcapa}
+\imagemcapa{}
+
+
+% CABEÇALHO PADRÃO: Logo + Disciplina com linhas decorativas
+\newcommand{\cabecalhopadrao}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2cm,dp=0.3cm]{headline}
+            \vskip0.04cm
+            \begin{columns}
+                \begin{column}{0.15\textwidth}
+                    \hspace*{0.5cm}
+                    \newtonlogo[1.8cm]
+                \end{column}
+                \begin{column}{0.85\textwidth}
+                    \begin{minipage}[t]{0.95\textwidth}
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                        \vskip0.3cm
+                        \hfill
+                        \textcolor{white}{\textbf{\insertdisciplina}}
+                        \vskip0.3cm
+                        \textcolor{white}{\rule{13cm}{1.0pt}}
+                    \end{minipage}
+                \end{column}
+            \end{columns}
+            \vskip0.04cm
+        \end{beamercolorbox}
+    }
+}
+
+% CABEÇALHO SIMPLES: Apenas logo pequeno no canto
+\newcommand{\cabecalhosimples}{
+    \setbeamertemplate{headline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=1cm,dp=0.1cm]{headline}
+            \vskip0.2cm
+            \hspace*{0.5cm}
+            \newtonlogo[0.8cm]
+            \vskip0.2cm
+        \end{beamercolorbox}
+    }
+}
+
+% ============================================================================
+% TEMPLATE PADRÃO DE TITLE PAGE: Layout em colunas com imagem
+% ============================================================================
+
+% TEMPLATE PADRÃO DE TITLE PAGE: Layout em colunas com imagem
+\newcommand{\titlepagepadrao}{
+    \setbeamertemplate{title page}{
+    % CABEÇALHO INCORPORADO DIRETAMENTE NA TITLE PAGE
+    % (porque title page é um template independente que não usa headline)
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2cm,dp=0.3cm]{headline}
+        \vskip0.04cm
+        \begin{columns}
+            \begin{column}{0.15\textwidth}
+                \hspace*{0.5cm}
+                \newtonlogo[1.8cm]
+            \end{column}
+            \begin{column}{0.85\textwidth}
+                \begin{minipage}[t]{0.95\textwidth}
+                    \textcolor{white}{\rule{13cm}{1.0pt}}
+                    \vskip0.3cm
+                    \hfill
+                    \textcolor{white}{\textbf{\insertdisciplina}}
+                    \vskip0.3cm
+                    \textcolor{white}{\rule{13cm}{1.0pt}}
+                \end{minipage}
+            \end{column}
+        \end{columns}
+        \vskip0.04cm
+    \end{beamercolorbox}
+    
+    \vskip1cm  % Espaçamento do topo
+    
+    % Layout em colunas para texto e imagem
+    \begin{columns}[onlytextwidth,T]
+        % Coluna da esquerda (60% da largura) - para texto institucional
+        \begin{column}{0.60\textwidth}
+            \vskip0.5cm
+            
+            % Nome da disciplina (mesmo que aparece no cabeçalho)
+            \begin{flushleft}
+                \textcolor{white}{\textbf{\LARGE \insertdisciplina}}
+            \end{flushleft}
+            
+            \vskip1.5cm
+            
+            % Nome da instituição
+            \begin{flushleft}
+                \textcolor{white}{\textbf{\Large \insertinstituicao}}
+            \end{flushleft}
+            
+            \vskip1cm
+            
+            % Nome do professor
+            \begin{flushleft}
+                \textcolor{white}{\textbf{\large \insertprofessor}}
+            \end{flushleft}
+            
+            \vskip1cm
+            
+            % Data
+            \begin{flushleft}
+                \textcolor{white}{\insertdate}
+            \end{flushleft}
+        \end{column}
+        
+        % Coluna da direita (40% da largura) - para imagem
+        \begin{column}{0.40\textwidth}
+            \begin{center}
+                % Logo da Newton Paiva (removido da capa)
+                % \newtonlogo[3cm]
+                
+                \vskip1cm
+                
+                % Imagem personalizada da capa
+                \ifx\@imagemcapa\@empty
+                    % Se não há imagem definida, mostra placeholder
+                    \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body}
+                        \vfill
+                        \textcolor{black}{\small Inserir imagem aqui}\\
+                        \textcolor{black}{\tiny Use: \textbackslash imagemcapa\{caminho\}}
+                        \vfill
+                    \end{beamercolorbox}
+                \else
+                    % Se há imagem definida, tenta diferentes caminhos
+                    \IfFileExists{\insertimagemcapa}{%
+                        \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{\insertimagemcapa}
+                    }{%
+                        \IfFileExists{../\insertimagemcapa}{%
+                            \includegraphics[width=0.8\textwidth,height=4cm,keepaspectratio]{../\insertimagemcapa}
+                        }{%
+                            % Se não encontrar a imagem, mostra placeholder com erro
+                            \begin{beamercolorbox}[wd=0.8\textwidth,ht=4cm,center]{block body alerted}
+                                \vfill
+                                \textcolor{black}{\small Imagem não encontrada}\\
+                                \textcolor{black}{\tiny \insertimagemcapa}
+                                \vfill
+                            \end{beamercolorbox}
+                        }%
+                    }%
+                \fi
+            \end{center}
+        \end{column}
+    \end{columns}
+    
+    \vfill                                               % Preenche espaço vertical restante
+    }
+}
+    
+
+
+
+\titlepagepadrao
+% ============================================================================
+% TEMPLATE MODERNO NEWTON PAIVA PARA MAKETITLE
+% ============================================================================
+% \setbeamertemplate{title page}{
+%     \vfill
+%     \begin{columns}[onlytextwidth,T]
+%         % COLUNA ESQUERDA - INFORMAÇÕES PRINCIPAIS
+%         \begin{column}{0.65\textwidth}
+%             \vskip1cm
+            
+%             % TÍTULO PRINCIPAL
+%             \begin{flushleft}
+%                 \textcolor{white}{\textbf{\Huge \inserttitle}}
+%                 \ifx\insertsubtitle\@empty%
+%                 \else%
+%                     \vskip0.5cm
+%                     \textcolor{newtanorange}{\textbf{\Large \insertsubtitle}}
+%                 \fi%
+%             \end{flushleft}
+            
+%             \vskip1cm
+%             \textcolor{newtanorange}{\rule{10cm}{3pt}}
+%             \vskip1.5cm
+            
+%             % DISCIPLINA
+%             \begin{flushleft}
+%                 \textcolor{white}{\textbf{\Large \insertdisciplina}}
+%             \end{flushleft}
+            
+%             \vskip0.8cm
+            
+%             % INSTITUIÇÃO
+%             \begin{flushleft}
+%                 \textcolor{white}{\textbf{\large \insertinstituicao}}
+%             \end{flushleft}
+            
+%             \vskip0.5cm
+            
+%             % PROFESSOR
+%             \begin{flushleft}
+%                 \textcolor{newtanorange}{\textbf{\insertprofessor}}
+%             \end{flushleft}
+            
+%             \vskip0.5cm
+            
+%             % DATA
+%             \begin{flushleft}
+%                 \textcolor{white}{\insertdate}
+%             \end{flushleft}
+            
+%         \end{column}
+        
+%         % COLUNA DIREITA - LOGO E ELEMENTOS VISUAIS
+%         \begin{column}{0.35\textwidth}
+%             \begin{center}
+%                 \vskip2cm
+                
+%                 % LOGO GRANDE
+%                 \newtonlogo[4cm]
+                
+%                 \vskip1cm
+                
+%                 % LINHA DECORATIVA
+%                 \textcolor{newtonpurple}{\rule{6cm}{2pt}}
+                
+%                 \vskip0.5cm
+                
+%                 % TEXTO INSTITUCIONAL
+%                 \textcolor{white}{\small \textbf{CENTRO UNIVERSITÁRIO}}
+%                 \\[0.2cm]
+%                 \textcolor{newtanorange}{\textbf{NEWTON PAIVA}}
+                
+%                 \vskip1cm
+                
+%                 % ELEMENTO VISUAL ADICIONAL
+%                 \textcolor{newtonpurple}{\rule{4cm}{1pt}}
+                
+%             \end{center}
+%         \end{column}
+%     \end{columns}
+%     \vfill
+% }

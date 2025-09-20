@@ -1,0 +1,198 @@
+% ============================================================================
+% EXEMPLO SIMPLES - LAYOUTS NEWTON PAIVA
+% Template básico para criar apresentações rapidamente
+% ============================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% Usa o sistema de layouts Newton Paiva
+\usepackage{../styles/newton-paiva-layouts}
+
+% Pacotes úteis
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+
+% ============================================================================
+% CONFIGURAÇÕES DA SUA APRESENTAÇÃO
+% ============================================================================
+
+% Título e subtítulo
+\title{Sua Apresentação Aqui}
+\subtitle{Subtítulo Opcional}
+
+% Informações da Newton Paiva
+\disciplina{Sua Disciplina}
+\instituicao{Centro Universitário Newton Paiva}
+\professor{Seu Nome}
+
+% Data
+\date{\today}
+
+% Seção atual (para layouts completos)
+\secaoatual{Introdução}
+
+% Imagem da capa (opcional - remova se não usar)
+% \imagemcapa{assets/images/sua-imagem.png}
+
+% ============================================================================
+% INÍCIO DO DOCUMENTO
+% ============================================================================
+\begin{document}
+
+% ============================================================================
+% PÁGINA DE TÍTULO
+% ============================================================================
+
+% Escolha um dos três estilos de title page:
+% \titlepagepadrao      - Layout padrão (2 colunas com imagem)
+% \titlepagemoderno     - Layout moderno (horizontal)
+% \titlepageclassico    - Layout clássico (centralizado)
+
+\titlepagepadrao
+\begin{frame}[plain]
+    \maketitle
+\end{frame}
+
+% ============================================================================
+% SLIDES DE CONTEÚDO
+% ============================================================================
+
+% Escolha um layout para seus slides:
+% \layoutpadrao         - Para slides normais
+% \layoutapresentacao   - Para apresentações formais
+% \layoutaula          - Para aulas
+% \layoutexercicio     - Para exercícios
+% \layoutsecao         - Para slides de seção
+% \layoutlimpo         - Para slides especiais
+
+\layoutpadrao
+
+\begin{frame}{Agenda}
+    \begin{block}{Tópicos da Apresentação}
+        \begin{itemize}
+            \item Primeiro tópico
+            \item Segundo tópico
+            \item Terceiro tópico
+            \item Conclusões
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Primeiro Tópico}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Conceitos}
+                \begin{itemize}
+                    \item Conceito A
+                    \item Conceito B
+                    \item Conceito C
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{exampleblock}{Exemplos}
+                \begin{itemize}
+                    \item Exemplo 1
+                    \item Exemplo 2
+                    \item Exemplo 3
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Mudando para layout de seção
+\layoutsecao
+
+\begin{frame}
+    \begin{center}
+        \Huge{\textcolor{newtanorange}{\textbf{Nova Seção}}}
+        \vspace{1cm}
+        
+        \Large{\textcolor{white}{Segunda Parte}}
+        
+        \vspace{2cm}
+        \textcolor{white}{\rule{10cm}{2pt}}
+    \end{center}
+\end{frame}
+
+% Voltando para layout normal
+\layoutpadrao
+\secaoatual{Segunda Parte}
+
+\begin{frame}{Segundo Tópico}
+    \begin{alertblock}{Importante}
+        Este é um ponto importante que merece destaque.
+    \end{alertblock}
+    
+    \begin{block}{Detalhes}
+        Aqui você pode colocar os detalhes do seu segundo tópico.
+        \begin{enumerate}
+            \item Primeiro item
+            \item Segundo item
+            \item Terceiro item
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+% Layout para exercícios
+\layoutexercicio
+
+\begin{frame}{Exercício Prático}
+    \begin{exampleblock}{Questão}
+        \textbf{Pergunta:} Como você aplicaria este conceito na prática?
+    \end{exampleblock}
+    
+    \begin{block}{Opções}
+        \textbf{a)} Primeira opção\\
+        \textbf{b)} Segunda opção\\
+        \textbf{c)} Terceira opção\\
+        \textbf{d)} Quarta opção
+    \end{block}
+\end{frame}
+
+% Layout limpo para conclusão
+\layoutlimpo
+
+\begin{frame}
+    \begin{center}
+        \vfill
+        \Huge{\textcolor{newtanorange}{\textbf{Conclusões}}}
+        \vspace{1cm}
+        
+        \Large{\textcolor{white}{Principais pontos abordados}}
+        \vspace{1cm}
+        
+        \textcolor{white}{\rule{12cm}{2pt}}
+        \vspace{1cm}
+        
+        \begin{itemize}
+            \item Ponto principal 1
+            \item Ponto principal 2
+            \item Ponto principal 3
+        \end{itemize}
+        \vfill
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \vfill
+        \Huge{\textcolor{newtanorange}{\textbf{Obrigado!}}}
+        \vspace{1cm}
+        
+        \newtonlogo[3cm]
+        
+        \vspace{1cm}
+        \Large{\textcolor{white}{Perguntas?}}
+        
+        \vspace{1.5cm}
+        \textcolor{newtanorange}{\textbf{Seu Nome}}
+        \\[0.3cm]
+        \textcolor{white}{Centro Universitário Newton Paiva}
+        \\[0.3cm]
+        \textcolor{white}{\small seu.email@newtonpaiva.br}
+        \vfill
+    \end{center}
+\end{frame}
+
+\end{document}
